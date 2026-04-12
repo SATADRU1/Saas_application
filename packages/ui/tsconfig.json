@@ -3,6 +3,7 @@
   "compilerOptions": {
     "baseUrl": ".",
     "paths": {
+      "@workspace/ui/globals.css": ["./src/styles/globals.css"],
       "@workspace/ui/*": ["./src/*"]
     }
   },
