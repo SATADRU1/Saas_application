@@ -6,6 +6,7 @@ import { ThemeProvider } from "@/components/theme-provider"
 import { Provider } from "@/components/convex-provider"
 import { cn } from "@workspace/ui/lib/utils";
 
+
 const geist = Geist({subsets:['latin'],variable:'--font-sans'})
 
 const fontMono = Geist_Mono({
@@ -27,7 +28,7 @@ export default function RootLayout({
       <body>
         <ClerkProvider>
           <Provider>
-            <ThemeProvider>{children}</ThemeProvider>
+              <ThemeProvider>{children}</ThemeProvider>
           </Provider>
         </ClerkProvider>
       </body>
