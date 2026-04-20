@@ -1,15 +1,15 @@
-import { mutation, query } from "./_generated/server";
+import { mutation, query ,MutationCtx, QueryCtx } from "./_generated/server";
 
 export const getMany = query({
     args: {},
-    handler: async (ctx) => {
+    handler: async (ctx: QueryCtx) => {
         return await ctx.db.query("users").collect();
     }
 })
 
 export const add = mutation({
     args: {},
-    handler: async (ctx) => {
+    handler: async (ctx: MutationCtx) => {
         const identity = await ctx.auth.getUserIdentity();
         if (identity === null) {
             throw new Error("Unauthorized")
@@ -20,6 +20,7 @@ export const add = mutation({
             throw new Error("No organization")
         }
 
+        // throw new Error("Something went wrong")
 
         const userID = await ctx.db.insert("users", {
             name: "Sata",
