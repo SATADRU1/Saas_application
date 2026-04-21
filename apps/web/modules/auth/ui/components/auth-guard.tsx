@@ -1,25 +1,31 @@
 "use client";
 
-import { Authenticated, Unauthenticated, AuthLoading } from "convex/react";
+import { useAuth } from "@clerk/nextjs";
 import { AuthLayout } from "../layouts/auth-layout";
-import { SignInView } from "../views/sign-in-view";
 
 export const AuthGuard = ({ children }: { children: React.ReactNode }) => {
-    return (
-        <>
-            <AuthLoading>
-                <AuthLayout>
-                    <p>Loading...</p>
-                </AuthLayout>
-            </AuthLoading>
-            <Authenticated>
-                {children}
-            </Authenticated>
-            <Unauthenticated>
-                <AuthLayout>
-                    <SignInView />
-                </AuthLayout>
-            </Unauthenticated>
-        </>
-    )
+    const { isLoaded, isSignedIn } = useAuth();
+
+    // While Clerk is still loading the session, show a loading state
+    if (!isLoaded) {
+        return (
+            <AuthLayout>
+                <p>Loading...</p>
+            </AuthLayout>
+        );
+    }
+
+    // If the user is not signed in, redirect to sign-in page.
+    // The Clerk middleware already handles this server-side,
+    // so this is just a client-side safety net.
+    if (!isSignedIn) {
+        return (
+            <AuthLayout>
+                <p>Redirecting to sign in...</p>
+            </AuthLayout>
+        );
+    }
+
+    // User is authenticated — render the dashboard
+    return <>{children}</>;
 }
