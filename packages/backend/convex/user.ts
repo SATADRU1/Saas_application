@@ -22,9 +22,10 @@ export const add = mutation({
 
         // throw new Error("Something went wrong")
 
-        const userID = await ctx.db.insert("users", {
-            name: "Sata",
-        });
-        return userID;
+        // const userID = await ctx.db.insert("users", {
+        //     name: "Sata",
+        // });
+        // return userID;
+
     }
 });
