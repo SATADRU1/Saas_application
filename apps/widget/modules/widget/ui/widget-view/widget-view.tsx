@@ -4,17 +4,19 @@ import { WidgetFooter } from "../components/widget-footer";
 // import { WidgetHeader } from "../components/widget-header";
 import { WidgetAuthScreen } from "../screens/widget-auth-screen";
 import { screenAtom } from "../../atoms/widget-atoms";
+import { WidgetErrorScreen } from "../screens/widget-error-screen";
+import { WidgetLoadingScreen } from "../screens/widget-loading-screen";
 
 interface props{
-    organizationId:string;
+    organizationId:string | null;
     
 }
 
 export const WidgetView = ({organizationId}:props)=>{
     const screen = useAtomValue(screenAtom);
     const screenComponent = {
-        error: () => <div>error</div>,
-        loading: () => <div>loading...</div>,
+        error: () => <WidgetErrorScreen/>,
+        loading: () => <WidgetLoadingScreen organizationId={organizationId} />,
         selection: () => <div>selection</div>,
         voice: () => <div>voice</div>,
         auth: () => <WidgetAuthScreen/>,
