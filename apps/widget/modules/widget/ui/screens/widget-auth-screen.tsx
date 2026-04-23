@@ -21,7 +21,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation } from "convex/react";
 import { api } from "@workspace/backend/_generated/api";
 import { useSetAtom, useAtomValue } from "jotai";
-import { contactSessionIdAtomFamily , organizationIdAtom } from "../../atoms/widget-atoms";
+import { contactSessionIdAtomFamily , organizationIdAtom, screenAtom } from "../../atoms/widget-atoms";
 
 
 
@@ -37,6 +37,7 @@ const organizationId = "123";
 export const WidgetAuthScreen = () => {
   const organizationId = useAtomValue(organizationIdAtom);
   const setContactSessionId = useSetAtom(contactSessionIdAtomFamily(organizationId || ""));
+  const setScreen = useSetAtom(screenAtom);
   
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -88,6 +89,7 @@ export const WidgetAuthScreen = () => {
       form.reset();
       
       setContactSessionId(contactSessionId);
+      setScreen("selection");
     } catch (error) {
       console.error("Failed to create contact session:", error);
     }
