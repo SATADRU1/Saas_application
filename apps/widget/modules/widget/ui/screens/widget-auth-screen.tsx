@@ -31,8 +31,7 @@ const formSchema = z.object({
   email: z.string().email("Invalid email address"),
 });
 
-// ⚠️ Replace later with real dynamic value
-const organizationId = "123";
+
 
 export const WidgetAuthScreen = () => {
   const organizationId = useAtomValue(organizationIdAtom);
