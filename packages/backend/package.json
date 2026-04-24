@@ -11,10 +11,17 @@
   "devDependencies": {
     "@types/node": "^25.1.0",
     "@workspace/typescript-config": "workspace:*",
-    "typescript": "latest"
+    "typescript": "^5.9.3"
   },
   "dependencies": {
-    "@clerk/backend": "^3.3.0",
-    "convex": "^1.35.1"
+    "@ai-sdk/google": "^2.0.0",
+    "@ai-sdk/groq": "^3.0.35",
+    "@ai-sdk/openai": "^3.0.10",
+    "@clerk/backend": "^2.6.1",
+    "@convex-dev/agent": "^0.6.1",
+    "@radix-ui/react-use-controllable-state": "^1.2.2",
+    "ai": "^6.0.35",
+    "convex": "^1.35.1",
+    "convex-helpers": "^0.1.115"
   }
 }

@@ -10,7 +10,11 @@
 
 import type * as public_contactSessions from "../public/contactSessions.js";
 import type * as public_converSession from "../public/converSession.js";
+import type * as public_messages from "../public/messages.js";
 import type * as public_organization from "../public/organization.js";
+import type * as system_ai_agents_supportAgent from "../system/ai/agents/supportAgent.js";
+import type * as system_contactSessions from "../system/contactSessions.js";
+import type * as system_conversations from "../system/conversations.js";
 import type * as user from "../user.js";
 
 import type {
@@ -22,7 +26,11 @@ import type {
 declare const fullApi: ApiFromModules<{
   "public/contactSessions": typeof public_contactSessions;
   "public/converSession": typeof public_converSession;
+  "public/messages": typeof public_messages;
   "public/organization": typeof public_organization;
+  "system/ai/agents/supportAgent": typeof system_ai_agents_supportAgent;
+  "system/contactSessions": typeof system_contactSessions;
+  "system/conversations": typeof system_conversations;
   user: typeof user;
 }>;
 
@@ -52,4 +60,6 @@ export declare const internal: FilterApi<
   FunctionReference<any, "internal">
 >;
 
-export declare const components: {};
+export declare const components: {
+  agent: import("@convex-dev/agent/_generated/component.js").ComponentApi<"agent">;
+};

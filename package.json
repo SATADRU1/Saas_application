@@ -2,6 +2,10 @@
   "name": "Saas_application",
   "version": "0.0.1",
   "private": true,
+  "packageManager": "pnpm@9.15.9",
+  "workspaces": [
+    "packages/*"
+  ],
   "scripts": {
     "build": "turbo build",
     "dev": "turbo dev",
@@ -17,8 +21,12 @@
     "turbo": "^2.8.17",
     "typescript": "5.9.3"
   },
-  "packageManager": "pnpm@9.15.9",
-  "engines": {
-    "node": ">=20"
+  "pnpm": {
+    "overrides": {
+      "ai": "^6.0.35"
+    }
+  },
+  "dependencies": {
+    "@convex-dev/agent": "^0.6.1"
   }
 }
