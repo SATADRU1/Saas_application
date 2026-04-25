@@ -79,7 +79,7 @@ export const DashboardSidebar = () => {
   };
 
   return (
-    <Sidebar>
+    <Sidebar collapsible="icon">
       {/* Header */}
       <SidebarHeader>
         <SidebarMenu>

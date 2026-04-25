@@ -8,8 +8,9 @@
  * @module
  */
 
+import type * as private_conversation from "../private/conversation.js";
 import type * as public_contactSessions from "../public/contactSessions.js";
-import type * as public_converSession from "../public/converSession.js";
+import type * as public_conversation from "../public/conversation.js";
 import type * as public_messages from "../public/messages.js";
 import type * as public_organization from "../public/organization.js";
 import type * as system_ai_agents_supportAgent from "../system/ai/agents/supportAgent.js";
@@ -24,8 +25,9 @@ import type {
 } from "convex/server";
 
 declare const fullApi: ApiFromModules<{
+  "private/conversation": typeof private_conversation;
   "public/contactSessions": typeof public_contactSessions;
-  "public/converSession": typeof public_converSession;
+  "public/conversation": typeof public_conversation;
   "public/messages": typeof public_messages;
   "public/organization": typeof public_organization;
   "system/ai/agents/supportAgent": typeof system_ai_agents_supportAgent;
