@@ -20,7 +20,7 @@ export const DashboardLayout = async ({ children }: { children: React.ReactNode 
                             <header className="flex h-16 shrink-0 items-center gap-2 px-4 border-b">
                                 <SidebarTrigger className="-ml-1" />
                             </header>
-                            <main className="flex flex-1 flex-col p-4">
+                            <main className="flex min-h-0 flex-1 flex-col p-4">
                                 {children}
                             </main>
                         </SidebarInset>
