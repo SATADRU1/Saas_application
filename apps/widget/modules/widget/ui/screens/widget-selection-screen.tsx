@@ -12,6 +12,7 @@ import { screenAtom, organizationIdAtom, contactSessionIdAtomFamily, errorMessag
 import { useState } from "react";
 
 
+
 export const WidgetSelectionScreen = () => {
 
     const setScreen = useSetAtom(screenAtom);
@@ -81,6 +82,8 @@ export const WidgetSelectionScreen = () => {
                 </Button>
                 
             </div>
+            
+
            
         </>
     );
