@@ -20,7 +20,7 @@ export const WidgetSelectionScreen = () => {
     const contactSessionId = useAtomValue(contactSessionIdAtomFamily(organizationId || ""));
     const setErrorMessage = useSetAtom(errorMessageAtom);
     const setConversationId = useSetAtom(conversationIdAtom);
-    const createConversation = useMutation(api.public.converSession.create);
+    const createConversation = useMutation(api.public.conversation.create);
     const [isPending, setIsPending] = useState(false);
 
 

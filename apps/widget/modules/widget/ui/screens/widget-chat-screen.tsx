@@ -53,7 +53,7 @@ export const WidgetChatScreen = () => {
     const setConversationId = useSetAtom(conversationIdAtom)
 
     const conversation = useQuery(
-        api.public.converSession.getOne,
+        api.public.conversation.getOne,
         conversationId && contactSessionId
             ? {
                   conversationId,

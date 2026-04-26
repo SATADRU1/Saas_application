@@ -21,7 +21,7 @@ export const WidgetInboxScreen = () => {
    const organizationId = useAtomValue(organizationIdAtom);
    const contactSessionId = useAtomValue(contactSessionIdAtomFamily(organizationId || ""));
    const conversations = usePaginatedQuery(
-    api.public.converSession.getMany,
+    api.public.conversation.getMany,
     contactSessionId ? {
         contactSessionId,
     } : "skip",

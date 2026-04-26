@@ -4,6 +4,7 @@ import { SidebarProvider, SidebarInset, SidebarTrigger } from "@workspace/ui/com
 import { cookies } from "next/headers"
 import { DashboardSidebar } from "@/modules/dashboard/ui/components/dashboard-sidebar"
 import { TooltipProvider } from "@workspace/ui/components/tooltip"
+import { Provider } from "jotai"
 
 export const DashboardLayout = async ({ children }: { children: React.ReactNode }) => {
 
@@ -11,23 +12,26 @@ export const DashboardLayout = async ({ children }: { children: React.ReactNode 
     const defaultOpen = cookieStore.get("sidebar_state")?.value !== "false";
 
     return (
-        <AuthGuard>
-           <OrganizationGuard>
-                <TooltipProvider>
-                    <SidebarProvider defaultOpen={defaultOpen}>
-                        <DashboardSidebar />
-                        <SidebarInset>
-                            <header className="flex h-16 shrink-0 items-center gap-2 px-4 border-b">
-                                <SidebarTrigger className="-ml-1" />
-                            </header>
-                            <main className="flex min-h-0 flex-1 flex-col p-4">
-                                {children}
-                            </main>
-                        </SidebarInset>
-                    </SidebarProvider>
-                </TooltipProvider>
-            </OrganizationGuard>
-        </AuthGuard>
+            <AuthGuard>
+            <OrganizationGuard>
+                 <Provider>
+                        <TooltipProvider>
+                            <SidebarProvider defaultOpen={defaultOpen}>
+                                <DashboardSidebar />
+                                <SidebarInset>
+                                    <header className="flex h-16 shrink-0 items-center gap-2 px-4 border-b">
+                                        <SidebarTrigger className="-ml-1" />
+                                    </header>
+                                    <main className="flex min-h-0 flex-1 flex-col p-4">
+                                        {children}
+                                    </main>
+                                </SidebarInset>
+                            </SidebarProvider>
+                        </TooltipProvider>
+                    </Provider>
+                </OrganizationGuard>
+            </AuthGuard>
+        
     )
     
 }
