@@ -1,5 +1,5 @@
 import { v } from "convex/values";
-import { query } from "../_generated/server";
+import { mutation, query } from "../_generated/server";
 import { MessageDoc } from "@convex-dev/agent";
 import { ConvexError } from "convex/values";
 import { supportAgent } from "../system/ai/agents/supportAgent";
@@ -7,6 +7,61 @@ import { supportAgent } from "../system/ai/agents/supportAgent";
 import { paginationOptsValidator } from "convex/server";
 import { PaginationResult } from "convex/server";
 import { Doc } from "../_generated/dataModel";
+
+export const updateStatus = mutation({
+    args: {
+        conversationId: v.id("conversations"),
+        status: v.union(
+            v.literal("unresolved"),
+            v.literal("resolved"),
+            v.literal("escalated")
+        ),
+    },
+    handler: async (ctx, args) => {
+        const identity = await ctx.auth.getUserIdentity();
+        if (!identity) {
+            throw new ConvexError({
+                code: "UNAUTHORIZED",
+                message: "User not authenticated",
+            });
+        }
+
+        const orgId = identity.orgId as string;
+
+        if (!orgId) {
+            throw new ConvexError({
+                code: "UNAUTHORIZED",
+                message: "Organization ID not found",
+            });
+        }
+        
+        
+        const conversation = await ctx.db.get(args.conversationId);
+        if (!conversation) {
+            throw new ConvexError({
+                code: "NOT_FOUND",
+                message: "Conversation not found",
+            });
+        }
+        
+        if (conversation.organizationId !== orgId) {
+            throw new ConvexError({
+                code: "UNAUTHORIZED",
+                message: "Conversation does not belong to this organization",
+            });
+        }
+        
+        await ctx.db.patch(args.conversationId, {
+            status: args.status,
+        });
+        
+        return {
+            success: true,
+            conversationId: args.conversationId,
+            status: args.status,
+        };
+    }
+});
 
 export const getOne = query({
     args : {
