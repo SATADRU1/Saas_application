@@ -6,6 +6,8 @@ import { supportAgent } from "../system/ai/agents/supportAgent";
 import { paginationOptsValidator } from "convex/server";
 import { saveMessage } from "@convex-dev/agent";
 import { components } from "../_generated/api";
+import { escalateConversation } from "../system/ai/tools/escalateConversation";
+import { resolveConversation } from "../system/ai/tools/resolveConversation";
 
 const APP_TIMEZONE = "Asia/Kolkata";
 
@@ -95,13 +97,25 @@ export const create = action({
             });
             return;
         }
+
+
+        const shouldTriggerAgent = 
+            conversation.status === "unresolved";
+
+        
         
         try {
             await supportAgent.generateText(
                 ctx,
                 { threadId: args.threadId},
-                { prompt: args.prompt }
+                { prompt: args.prompt,
+                    tools: {
+                        escalateConversation,
+                        resolveConversation
+                    }
+                 }
             )
+            
         } catch (error) {
             const message =
                 error instanceof Error ? error.message : String(error);
@@ -143,8 +157,9 @@ export const create = action({
             });
         }
 
+    
+    
     }
-
 })
 
 export const getMany = query ({

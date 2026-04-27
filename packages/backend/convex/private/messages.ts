@@ -1,11 +1,13 @@
 
 import { action, mutation, query } from "../_generated/server";
+import { generateText } from "ai";
 import { ConvexError, v } from "convex/values";
 import { internal } from "../_generated/api";
 import { supportAgent } from "../system/ai/agents/supportAgent";
 import { paginationOptsValidator } from "convex/server";
 import { saveMessage } from "@convex-dev/agent";
 import { components } from "../_generated/api";
+import { groq } from "@ai-sdk/groq";
 
 const APP_TIMEZONE = "Asia/Kolkata";
 
@@ -32,6 +34,45 @@ function getDateTimeAnswer() {
     return `Today's date is ${dateText}. Current time is ${timeText} (${APP_TIMEZONE}).`;
 }
 
+
+export const enhanceResponse = action({
+    args: {
+        prompt: v.string(),
+    },
+    handler: async (ctx, args) => {
+        const identity = await ctx.auth.getUserIdentity();
+        if (!identity) {
+            throw new ConvexError({
+                code: "UNAUTHORIZED",
+                message: "identity not found",
+            });
+        }
+        
+        const orgId = identity.orgId as string;
+        
+        if (!orgId) {
+            throw new ConvexError({
+                code: "UNAUTHORIZED",
+                message: "Organization ID not found",
+            });
+        }
+        
+        const response = await generateText({
+            model: groq("llama-3.3-70b-versatile"),
+            messages: [
+                {
+                    role: "system",
+                    content: "Emhance the operator's response to be more helpful and detailed.",
+                },
+                {
+                    role: "user",
+                    content: args.prompt,
+                },
+            ],
+        })
+        return response.text;
+    }
+})
 
 export const create = mutation({
     args: {
@@ -111,7 +152,7 @@ export const create = mutation({
         await saveMessage(ctx, components.agent, {
             threadId: conversation.threadId,
             message: {
-                role: "user",
+                role: "assistant",
                 content: [{ type: "text", text: args.prompt }],
             },
         });
